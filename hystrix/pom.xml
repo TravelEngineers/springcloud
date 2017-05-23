@@ -7,16 +7,7 @@
     <groupId>com.zgs.springcloud</groupId>
     <artifactId>hystrix</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <distributionManagement>
-        <repository>
-            <id>muziflower-springcloud-release</id>
-            <url>http://www.muziflower.pub:18081/muzilibs/content/repositories/muziflower-springcloud-release</url>
-        </repository>
-        <snapshotRepository>
-            <id>muziflower-springcloud-snapshot</id>
-            <url>http://www.muziflower.pub:18081/muzilibs/content/repositories/muziflower-springcloud-snapshot</url>
-        </snapshotRepository>
-    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
