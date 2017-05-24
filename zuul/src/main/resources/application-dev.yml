@@ -1,0 +1,28 @@
+server:
+  port: 9188
+spring:
+  application:
+    name: zuul-gateway
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:123456@localhost:8761/eureka  #注册 中心已经开启认证
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+zuul:
+  routes:
+    #映射方式一
+    #Zuul的中规则为： /api-a/** 的访问都映射到 http://localhost:9158/ 上，
+    #也就是说当我们访问 http://localhost:9188/api-a/hello/zgs 的时候，
+    #Zuul会将该请求路由到： http://localhost:9185/hello/zgs 上
+    api-a:
+      path: /api-a/**
+      url: http://localhost:9158
+    #映射方式二（推荐方式：支持断路器和负载均衡）
+    #Zuul的中规则为： /api-b/** 的访问都映射到 microservice-provider-user 上，
+    #也就是说当我们访问 http://localhost:9188/api-b/hello/zgs 的时候，
+    #Zuul会将该请求路由到： http://microservice-provider-user/hello/zgs 上
+    api-b:
+      path: /api-b/**
+      serviceId: microservice-provider-user
