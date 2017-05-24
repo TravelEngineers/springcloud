@@ -1,8 +1,11 @@
 server:
   port: 9158
+ # context-path: /api-a/
 spring:
   application:
     name: microservice-provider-user
+  zipkin: #启用sleuht往zipkin发数据
+    baseUrl: http://localhost:11811
 eureka:
   client:
     serviceUrl:

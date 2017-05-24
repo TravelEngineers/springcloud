@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: microservice-customer-user
+  zipkin:
+    baseUrl: http://localhost:11811
 eureka:
   client:
     serviceUrl:

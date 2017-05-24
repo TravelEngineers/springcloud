@@ -1,3 +1,2 @@
 server:
-    prot:8081
-    context-path:/myspringboot
+  port: 8118
