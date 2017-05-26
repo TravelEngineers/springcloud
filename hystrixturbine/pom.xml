@@ -93,7 +93,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
-
+        <!--hystrix-turbine-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-turbine</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
