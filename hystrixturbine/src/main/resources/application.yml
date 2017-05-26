@@ -22,5 +22,6 @@ feign:
 #从eureka返回的值都是大写的，因此我们希望下面的例子可以工作，如果一个app使用eureka注册，并且被叫做microservice-customer-user:
 turbine:
   aggregator:
-    clusterConfig: MICROSERVICE-CUSTOMER-TURBINE,MICROSERVICE-CUSTOMER-USER
-  appConfig: microservice-customer-turbine,microservice-customer-user
+    clusterConfig: dafault # 指定聚合哪些集群，多个使用","分割，默认为default。
+  appConfig: microservice-customer-turbine,microservice-customer-user # 配置Eureka中的serviceId列表，表明监控哪些服务
+  clusterNameExpression: default #指定集群名称

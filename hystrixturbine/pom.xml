@@ -96,7 +96,7 @@
         <!--hystrix-turbine-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-turbine</artifactId>
+            <artifactId>spring-cloud-starter-turbine</artifactId>
         </dependency>
     </dependencies>
 
