@@ -1,0 +1,26 @@
+server:
+  port: 6158
+spring:
+  application:
+    name: microservice-customer-turbine
+  zipkin:
+    baseUrl: http://localhost:11811
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:123456@localhost:8761/eureka  #注册 中心已经开启认证
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+feign:
+  hystrix:
+    enabled: true
+#turbine.appConfig配置是一个eureka服务ID列表，turbine将使用这个配置查询实例。
+#turbine stream在hystrix dashboard中使用如下的url配置：
+#http://my.turbine.server:8080/turbine.stream?cluster=,如果集群的名称是default，集群参数可以忽略）。
+#这个集群参数必须和turbine.aggregator.clusterConfig匹配。
+#从eureka返回的值都是大写的，因此我们希望下面的例子可以工作，如果一个app使用eureka注册，并且被叫做microservice-customer-user:
+turbine:
+  aggregator:
+    clusterConfig: MICROSERVICE-CUSTOMER-TURBINE,MICROSERVICE-CUSTOMER-USER
+  appConfig: microservice-customer-turbine,microservice-customer-user
