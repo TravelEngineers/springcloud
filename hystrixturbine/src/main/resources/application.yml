@@ -1,5 +1,5 @@
 server:
-  port: 6158
+  port: 5158
 spring:
   application:
     name: microservice-customer-turbine
@@ -12,16 +12,14 @@ eureka:
   instance:
     prefer-ip-address: true
     instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+    metadata-map:
+      turbine-cluster-key: TYSJKF
 feign:
   hystrix:
     enabled: true
-#turbine.appConfig配置是一个eureka服务ID列表，turbine将使用这个配置查询实例。
-#turbine stream在hystrix dashboard中使用如下的url配置：
-#http://my.turbine.server:8080/turbine.stream?cluster=,如果集群的名称是default，集群参数可以忽略）。
-#这个集群参数必须和turbine.aggregator.clusterConfig匹配。
-#从eureka返回的值都是大写的，因此我们希望下面的例子可以工作，如果一个app使用eureka注册，并且被叫做microservice-customer-user:
+#聚合地址：http://localhost:5158/turbine.stream?cluster=TYSJKF
 turbine:
   aggregator:
-    clusterConfig: dafault # 指定聚合哪些集群，多个使用","分割，默认为default。
-  appConfig: microservice-customer-turbine,microservice-customer-user # 配置Eureka中的serviceId列表，表明监控哪些服务
-  clusterNameExpression: default #指定集群名称
+    clusterConfig: TYSJKF # 指定聚合哪些集群，多个使用","分割。
+  appConfig: MICROSERVICE-CUSTOMER-TURBINE,MICROSERVICE-CUSTOMER-USER # 配置Eureka中的serviceId列表，表明监控哪些服务
+  clusterNameExpression: metadata['turbine-cluster-key'] #指定eureka中定义的集群的key（turbine-cluster-key）对应的值，即集群的名字
