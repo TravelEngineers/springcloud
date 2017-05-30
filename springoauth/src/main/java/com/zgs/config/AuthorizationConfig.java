@@ -8,12 +8,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
  * Created by Smily on 2017/5/27.
  */
 @Configuration
-public class OauthConfig extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory() // 使用in-memory存储
-                .withClient("client") // client_id
-                .secret("secret") // client_secret
+                .withClient("clientId") // client_id
+                .secret("secretId") // client_secret
                 .authorizedGrantTypes("authorization_code") // 该client允许的授权类型
                 .scopes("app"); // 允许的授权范围
     }

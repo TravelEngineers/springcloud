@@ -1,2 +1,12 @@
 server:
   port: 8080
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:8080/oauth/check_token
+    client:
+          client-id: clientId
+          client-secret: secretId
+          user-authorization-uri: http://localhost:8080/oauth/authorize
+          access-token-uri: http://localhost:8080/oauth/token
+          grant-type: client_credentials
