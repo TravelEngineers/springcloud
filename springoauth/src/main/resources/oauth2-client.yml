@@ -1,0 +1,16 @@
+oauth2:
+  client:
+    scope: #这是一个可选参数。它代表访问请求的范围。由服务器返回的访问令牌只可以访问在 scope 中提到的那些服务。
+    state: #这是一个可选参数，用于维持客户端请求和来自授权服务器的重定向响应之间的状态，目的是确保客户端的完整性。
+    grant_type: #需要将这个参数设置为 authorization_code，表示认证码授权类型。
+    client_id: #注册应用程序时由资源服务器提供的客户端或使用者 ID。
+    client_secret: #注册应用程序时由资源服务器提供的客户端或使用者的密码。
+    access_token: #令牌端点响应有效的和经过授权的访问令牌请求时所返回的访问令牌。由授权服务器返回的授权代码用于交换访问令牌。
+    refresh_token: #令牌端点响应有效的和经过授权的访问令牌请求时所返回的刷新令牌。刷新令牌可以用于刷新过期的访问令牌，无需资源所有者的存在就可以再次进行身份验证。客户端需要明确地向服务器请求刷新令牌。
+    redirect_uri: #授权服务器将用户代理作为授权码请求的一部分重定向到该 URI。授权码被发送到这个 URI。
+    authentication_server_url: #这表示授权服务器。获取授权码的所有请求都需要被发送到这个 URL。
+    token_endpoint_url: #这表示令牌端点。通过刷新令牌请求来获取访问令牌和刷新访问令牌的所有请求都需要发送到这个 URL。
+    resource_server_url: #这表示需要联系的资源服务器的 URL，通过将 Authorization 标头中的访问令牌传递给它，访问受保护的资源。
+    approval_prompt_key: #授权服务器用于定义授权提示条件的属性名。通常，每个授权服务器（Salesforce、Google、IBM 等）都有一个需要作为授权码请求的一部分传递的自定义属性，用于表示该客户端是否要强制执行每个请求的授权提示。Google 的属性名是approval_prompt。对于 Salesforce，它是 login consent。
+    access_type_key: #授权服务器用于定义访问类型条件的属性名。通常，每个授权服务器（Salesforce、Google、IBM 等）都有一个自定义方法，客户端可以通过它传达指令，比如它想要一个刷新令牌和访问令牌作为访问令牌请求的一部分。Google 通过提供 access_type 属性执行此方法。Salesforce 要求您输入 refresh_token 值作为 scope 的一部分。
+    access_type_value: #access_type_key 属性的值。对于 Google，您需要将 offline 值传递给服务器，以包含刷新令牌和访问令牌。

@@ -1,12 +1,19 @@
 server:
   port: 8080
-security:
-  oauth2:
-    resource:
-      token-info-uri: http://localhost:8080/oauth/check_token
-    client:
-          client-id: clientId
-          client-secret: secretId
-          user-authorization-uri: http://localhost:8080/oauth/authorize
-          access-token-uri: http://localhost:8080/oauth/token
-          grant-type: client_credentials
+spring:
+  application:
+    name: microservice-provider-oauth2
+  zipkin:
+    baseUrl: http://localhost:11811
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:123456@localhost:8761/eureka  #注册 中心已经开启认证
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+    metadata-map:
+       turbine-cluster-key: TYSJKF
+feign:
+  hystrix:
+    enabled: true
