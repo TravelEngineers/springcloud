@@ -12,6 +12,8 @@ eureka:
   instance:
     prefer-ip-address: true
     instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+    metadata-map:
+       turbine-cluster-key: TYSJKF
 feign:
   hystrix:
     enabled: true
