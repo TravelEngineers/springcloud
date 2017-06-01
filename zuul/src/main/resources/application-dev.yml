@@ -19,6 +19,9 @@ zuul:
     api-a:
       path: /api-a/**
       url: http://localhost:9158
+      #此配置时需要添加ribbon.eureka.enabled=false,关闭ribbon通过eureka负载微服务
+      #api.ribbon.listOfServers=192.168.1.100:8080,192.168.1.101:8080
+      strPrefix: true #是否清除前缀 默认为true
     #映射方式二（推荐方式：支持断路器和负载均衡）
     #Zuul的中规则为： /api-b/** 的访问都映射到 microservice-provider-user 上，
     #也就是说当我们访问 http://localhost:9188/api-b/hello/zgs 的时候，
@@ -26,3 +29,4 @@ zuul:
     api-b:
       path: /api-b/**
       serviceId: microservice-provider-user
+      strPrefix: true
