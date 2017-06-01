@@ -1,5 +1,11 @@
 package com.zgs.oauth2server;
 
+import com.alibaba.fastjson.JSONObject;
+import com.zgs.common.ValidateUtils;
+import com.zgs.service.AuthcodeTokenService;
+import com.zgs.service.ClinetcredentTokenService;
+import com.zgs.service.PassTokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,6 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/oauth2")
 public class Oauth2Server {
+    @Autowired
+    private AuthcodeTokenService authcodeTokenService;
+    @Autowired
+    private PassTokenService passTokenService;
+    @Autowired
+    private ClinetcredentTokenService clinetcredentTokenService;
     /**
      * 注册APP
      */
@@ -48,6 +60,24 @@ public class Oauth2Server {
      */
     @RequestMapping("/token")
     public String token(HttpServletRequest request, HttpServletResponse response){
+        JSONObject resp=new JSONObject();
+        String grant_type=request.getParameter("grant_type");
+        if(!ValidateUtils.isEmpty(grant_type)){
+            switch (grant_type){
+                case "authorization_code":resp=authcodeTokenService.getToken(request);break;
+                case "client_credentials":resp=clinetcredentTokenService.getToken(request);break;
+                case "password":resp=passTokenService.getToken(request);break;
+                case "refresh_token":break;
+                default:
+                    resp.put("respCode",1002);
+                    resp.put("respDesc","不支持的授权类型");
+                    break;
+            }
+        }else{
+            resp.put("respCode",1001);
+            resp.put("respDesc","授权类型不能为空");
+        }
+        return resp.toJSONString();
 //        返回数据DEMO
 //        {
 //            "access_token":"2YotnFZFEjr1zCsicMWpAA",
@@ -56,6 +86,5 @@ public class Oauth2Server {
 //                "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
 //                "example_parameter":"example_value"
 //        }
-        return "";
     }
 }
