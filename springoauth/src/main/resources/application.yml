@@ -16,10 +16,13 @@ spring:
          max-wait: -1
          max-idle: 500
          min-idle: 0
+    #  sentinel:   #开启哨兵模式
+    #     master: redis-master # name of Redis server
+     #    nodes:  127.0.0.1:1001,127.0.0.1:1002# comma-separated list of host:port pairs
   datasource:
      url: jdbc:mysql://localhost:3306/test
      username: root
-     password: 123456
+     password: root
      driver-class-name: com.mysql.jdbc.Driver
 eureka:
   client:
