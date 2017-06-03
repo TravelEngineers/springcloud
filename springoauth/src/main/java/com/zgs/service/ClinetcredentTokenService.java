@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  *  客户端凭证方式获取授权token
@@ -24,8 +26,14 @@ public class ClinetcredentTokenService {
         String client_id=request.getParameter("client_id");
         String client_secret=request.getParameter("client_secret");
         if(checkInfo(client_id,client_secret)){
-             redisTemplate.opsForValue().set("client_id","client_secret");
+            redisTemplate.opsForValue().set("client_id",client_id,10,TimeUnit.SECONDS);
             //生成调用方授权信息
+            respData.put("access_token","2YotnFZFEjr1zCsicMWpAA");
+            respData.put("token_type","Bearer");
+            respData.put("refresh_token","tGzv3JOkF0XG5Qx2TlKWIA");
+            respData.put("expires_in",3600);
+            respData.put("respCode",200);
+            respData.put("respDesc","success");
         }else{
             respData.put("respCode",2001);
             respData.put("respDesc","调用方身份异常");
@@ -40,6 +48,11 @@ public class ClinetcredentTokenService {
      * @return
      */
     private boolean checkInfo(String client_id,String client_secret){
-        return true;
+        String sql="select *  from client_info  where client_secret='"+client_secret+"' and client_id='"+client_id+"'";
+        List l=this.jdbcTemplate.queryForList(sql);
+        if(l!=null&&l.size()>0){
+            return true;
+        }
+        return false;
     }
 }

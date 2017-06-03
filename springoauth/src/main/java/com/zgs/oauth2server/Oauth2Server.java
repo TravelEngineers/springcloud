@@ -6,8 +6,11 @@ import com.zgs.service.AuthcodeTokenService;
 import com.zgs.service.ClinetcredentTokenService;
 import com.zgs.service.PassTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Shmily on 2017/5/30.
  */
-@Controller
 @RequestMapping("/oauth2")
+@Controller
 public class Oauth2Server {
     @Autowired
     private AuthcodeTokenService authcodeTokenService;
@@ -42,7 +45,11 @@ public class Oauth2Server {
      */
     @RequestMapping("/authorize")
     public String authorize(HttpServletRequest request, HttpServletResponse response){
-      return "";
+        String redirect_uri=request.getParameter("redirect_uri");
+        if(!ValidateUtils.isEmpty(redirect_uri)){
+            return "redirect:"+redirect_uri+"?code=aodeqasm";
+        }
+        return "";
     }
 
     /**
@@ -59,6 +66,7 @@ public class Oauth2Server {
      &redirect_uri=https://client.example.com
      */
     @RequestMapping("/token")
+    @ResponseBody
     public String token(HttpServletRequest request, HttpServletResponse response){
         JSONObject resp=new JSONObject();
         String grant_type=request.getParameter("grant_type");
