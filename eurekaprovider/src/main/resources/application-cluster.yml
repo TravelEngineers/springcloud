@@ -1,0 +1,15 @@
+server:
+  port: 9158
+ # context-path: /api-a/
+spring:
+  application:
+    name: microservice-provider-user
+  zipkin: #启用sleuht往zipkin发数据
+    baseUrl: http://localhost:11811
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:123456@eureka1:8761/eureka,http://user:123456@eureka2:9761/eureka  #注册 中心已经开启认证
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
