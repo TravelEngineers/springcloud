@@ -1,0 +1,16 @@
+spring:
+  profiles: eureka1
+server:
+  port: 8761
+security:
+  basic:
+    enabled: true #开启认证
+  user:
+    name: user
+    password: 123456
+eureka:
+  instance:
+    hostname: eureka1
+  client:
+    serviceUrl:
+      defaultZone: http://user:password@eureka2:9761/eureka
