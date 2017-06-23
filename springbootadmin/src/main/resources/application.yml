@@ -1,0 +1,17 @@
+server:
+  port: 11815
+spring:
+  application:
+    name: spring-boot-admin
+management:
+  security:
+    enabled: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:123456@localhost:8761/eureka  #注册 中心已经开启认证
+  instance:
+    prefer-ip-address: true
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+info:
+  owner: Shmily

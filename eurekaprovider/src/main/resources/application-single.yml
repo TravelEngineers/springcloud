@@ -6,6 +6,9 @@ spring:
     name: microservice-provider-user
   zipkin: #启用sleuht往zipkin发数据
     baseUrl: http://localhost:11811
+management:
+  security:
+    enabled: false
 eureka:
   client:
     serviceUrl:
