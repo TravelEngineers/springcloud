@@ -6,3 +6,6 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+elasticsearch:
+    clusterName: CollectorDBCluster   #ES集群名称
+    clusterNodes: localhost:9300   #ES集群IP，以,分隔
