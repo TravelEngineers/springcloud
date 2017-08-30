@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th=http://www.thymeleaf.org>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>欢迎使用定制版WebShell</title>
+    <link rel="stylesheet" th:href="@{/static/amazeui/assets/css/amazeui.min.css}">
+    <link rel="stylesheet" th:href="@{/static/amazeui/assets/css/app.css}">
+</head>
+<body>
+<div class="am-input-group am-input-group-primary" id="ip_panel">
+    <span class="am-input-group-label"><i class="am-icon-home am-icon-fw"></i></span>
+    <input type="text" id="ip_input" value="" class="am-form-field" placeholder="主机IP">
+</div>
+<div class="am-input-group am-input-group-warning" id="usernmae_panel">
+    <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+    <input type="text" id="username_input" value="" class="am-form-field" placeholder="用户名">
+</div>
+<div class="am-input-group am-input-group-primary" id="password_panel">
+    <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
+    <input type="text" id="password_input" value="" class="am-form-field" placeholder="用户密码">
+</div>
+<div class="am-input-group am-input-group-warning" id="exec_panel">
+    <span class="am-input-group-label"><i class="am-icon-search am-icon-fw"></i></span>
+    <input type="text" id="exec_input" class="am-form-field" placeholder="输入命令">
+</div>
+<button type="button" id="login_btn" class="am-btn am-btn-success" style="width: 50%;float: left;">登陆</button>
+<button type="button" id="exec_btn" class="am-btn am-btn-primary" style="width: 50%;">执行</button>
+<div class="am-panel am-panel-primary" style="margin-left:5px;margin-right:5px; margin-top: 10px;">
+    <div class="am-panel-hd">服务器反馈</div>
+    <div class="am-panel-bd" >
+        <pre  id="server-response"></pre>
+    </div>
+</div>
+ <!--[if lt IE 9]>
+ <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+ <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+ <script th:src="@{/static/amazeui/assets/js/amazeui.ie8polyfill.min.js}"></script>
+ <![endif]-->
+ <script th:src="@{/static/plus/jquery.js}"></script>
+ <script>
+   $("#login_btn").click(function () {
+       $.ajax({
+           type: "POST",
+           url: "[[@{/ssh/init}]]",
+           data: "username="+$("#username_input").val()+"&password="+$("#password_input").val()+"&host="+$("#ip_input").val(),
+           success: function(msg){
+               $("#server-response").append(msg.execResult);
+               $("#usernmae_panel,#ip_panel,#password_panel").remove();
+           }
+       });
+   });
+   $("#exec_btn").click(function () {
+       $.ajax({
+           type: "POST",
+           url: "[[@{/ssh/exec}]]",
+           data: "cmd="+$("#exec_input").val(),
+           success: function(msg){
+               $("#server-response").empty();
+               $("#server-response").append(msg.execResult);
+               $("#usernmae_panel,#ip_panel,#password_panel").remove();
+           }
+       });
+   });
+ </script>
+</body>
+</html>
